@@ -104,23 +104,26 @@
       padding:.3rem .9rem;border-radius:50px;margin-bottom:1rem;
       letter-spacing:.8px;text-transform:uppercase;
     }
-    .hero-logo-wrap{margin-bottom:.75rem}
-    .hero-logo{height:48px;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+    .hero-logo-wrap{margin-bottom:.8rem}
+    .hero-logo{height:200px;object-fit:contain;filter:drop-shadow(0 6px 32px rgba(0,0,0,.7))}
+    .hero-main{display:flex;align-items:flex-end;gap:2.5rem;margin-top:.65rem}
+    .hero-brand-block{flex-shrink:0;order:2;display:flex;flex-direction:column;align-items:center}
+    .hero-text-block{flex:1;order:1;min-width:0}
     .hero-titre{
       font-size:clamp(3.5rem,9vw,6rem);font-weight:900;color:white;
-      line-height:.92;margin-bottom:.65rem;letter-spacing:-1px;
+      line-height:.92;margin-bottom:.5rem;letter-spacing:-1px;text-align:center;
     }
     .hero-titre em{color:var(--or);font-style:normal}
     .hero-sub{
       font-size:1rem;color:rgba(255,255,255,.65);font-weight:700;
-      line-height:1.5;margin-bottom:.5rem;max-width:480px;
+      line-height:1.5;margin-bottom:.5rem;white-space:nowrap;
     }
     .hero-rating{
       display:inline-flex;align-items:center;gap:.45rem;
-      color:rgba(255,255,255,.5);font-size:.82rem;font-weight:700;margin-bottom:2rem;
+      color:rgba(255,255,255,.5);font-size:.82rem;font-weight:700;margin-bottom:0;
     }
     .hero-rating strong{color:var(--or-vif)}
-    .hero-actions{display:flex;gap:.65rem;flex-wrap:wrap}
+    .hero-actions{display:flex;gap:.65rem;flex-wrap:wrap;justify-content:center;margin-top:1.75rem}
 
     /* ══════════════════════════════════════════
        BOUTONS
@@ -515,9 +518,13 @@
        RESPONSIVE
     ══════════════════════════════════════════ */
     @media(max-width:680px){
-      html{scroll-padding-top:105px}
+      html{scroll-padding-top:130px}
       .hero-content{padding:0 1.25rem 3rem}
-      .hero-titre{font-size:3.2rem}
+      .hero-main{flex-direction:column;gap:.8rem}
+      .hero-brand-block{order:1;align-items:flex-start}
+      .hero-text-block{order:2}
+      .hero-logo{height:110px}
+      .hero-sub{white-space:normal;font-size:.88rem}
       .infos-grid{grid-template-columns:1fr}
       .info-card--full{grid-column:auto}
       .deux-col{grid-template-columns:1fr}
@@ -529,7 +536,8 @@
       .tacos-grid{grid-template-columns:1fr}
       .expertise{gap:.75rem;padding:.8rem 1rem}
       .sticky-top{padding:.45rem 1rem .35rem}
-      .sticky-nav{padding:.25rem 1rem .4rem}
+      .sticky-nav{flex-wrap:wrap;overflow-x:visible;padding:.3rem .85rem .45rem;gap:.28rem}
+      .sticky-pill{font-size:.65rem;padding:.22rem .6rem}
       .section-head{flex-direction:column}
       .section-head__img{width:100%;height:120px}
     }
@@ -623,19 +631,24 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-badge">🕌 Depuis 14 ans à Tullins-Fures · Isère</div>
-    <div class="hero-logo-wrap">
-      <img src="logo/logo detoure bosphore.png" alt="Bosphore" class="hero-logo"
-           onerror="this.style.display='none'">
-    </div>
-    <h1 class="hero-titre"><em>Bosphore</em></h1>
-    <p class="hero-sub">Kebab 100&nbsp;% veau · Tacos · Burgers maison<br>Des produits frais, des recettes authentiques</p>
-    <div class="hero-rating">
-      <strong>⭐ 4,6/5</strong> · 310 avis Google · ☪️ Halal certifié
+    <div class="hero-main">
+      <div class="hero-brand-block">
+        <div class="hero-logo-wrap">
+          <img src="logo/logo detoure bosphore.png" alt="Bosphore" class="hero-logo"
+               onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div class="hero-text-block">
+        <p class="hero-sub">Kebab 100&nbsp;% veau · Tacos · Burgers maison<br>Des produits frais, des recettes authentiques</p>
+        <div class="hero-rating">
+          <strong>⭐ 4,6/5</strong> · 310 avis Google · ☪️ Halal certifié
+        </div>
+      </div>
     </div>
     <nav class="hero-actions">
       <a href="tel:0476358886" class="btn btn-or">📞 Appeler</a>
       <button class="btn btn-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Commander par WhatsApp</button>
-      <a href="#menu" class="btn btn-outline">Voir la carte ↓</a>
+      <a href="#entrees" class="btn btn-outline">Voir la carte ↓</a>
     </nav>
   </div>
 </section>
@@ -714,20 +727,6 @@
     </div>
   </div>
 </section>
-
-<!-- ══ MENU NAV (dans le DOM) ══ -->
-<div class="menu-nav-wrap" id="menu">
-  <nav class="menu-nav" aria-label="Catégories du menu">
-    <a href="#entrees"   class="menu-pill">🥗 Entrées</a>
-    <a href="#assiettes" class="menu-pill">🍽️ Assiettes</a>
-    <a href="#burgers"   class="menu-pill">🍔 Burgers</a>
-    <a href="#sandwichs" class="menu-pill">🥙 Sandwichs</a>
-    <a href="#tacos"     class="menu-pill">🌯 Tacos</a>
-    <a href="#commande"  class="menu-pill">✨ Sur commande</a>
-    <a href="#desserts"  class="menu-pill">🍮 Desserts</a>
-    <a href="#boissons"  class="menu-pill">🥤 Boissons</a>
-  </nav>
-</div>
 
 <!-- ══ ENTRÉES ══ -->
 <section class="menu-section" id="entrees">
@@ -1117,12 +1116,10 @@ inView('.menu-item, .tacos-item, .commande-card, .info-card, .photo-item, .comma
 
   /* ── Sticky bar : apparaît dès 25% du hero scrollé ── */
   const stickyBar = document.getElementById('sticky-bar');
-  const menuNav   = document.getElementById('menu');
   function updateSticky() {
     const triggerAt = window.innerHeight * 0.25;
     const show = window.scrollY > triggerAt;
     stickyBar.classList.toggle('visible', show);
-    menuNav.style.top = show ? (stickyBar.offsetHeight + 'px') : '0px';
   }
   window.addEventListener('scroll', updateSticky, { passive: true });
   updateSticky();
