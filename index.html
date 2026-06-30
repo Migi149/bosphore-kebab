@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bosphore — Kebab &amp; Tacos · Tullins</title>
+  <meta name="description" content="Bosphore, kebab 100% veau fait maison depuis 14 ans à Tullins-Fures. Tacos, burgers, assiettes orientales. Commandez par WhatsApp ou appelez.">
+  <link rel="icon" href="logo/favicon-32x32 bosphore.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --noir:     #0F0A05;
+      --brun:     #1E1208;
+      --or:       #C9923A;
+      --or-lt:    #FDF3E3;
+      --or-vif:   #E8A845;
+      --rouge:    #C0392B;
+      --rouge-lt: #FCE8E6;
+      --creme:    #FDFAF5;
+      --gris:     #F5F0E8;
+      --gris-bord:#E2D9CC;
+      --texte:    #1E1208;
+      --texte-2:  #7A6A55;
+      --s1: 0 2px 6px rgba(30,18,8,.07);
+      --s2: 0 4px 16px rgba(30,18,8,.10);
+      --s3: 0 10px 36px rgba(30,18,8,.14);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;scroll-padding-top:112px}
+    body{font-family:'Nunito',sans-serif;color:var(--texte);background:var(--creme);overflow-x:hidden}
+
+    /* ══════════════════════════════════════════
+       STICKY BAR (2 rangées : titre+actions / nav)
+    ══════════════════════════════════════════ */
+    .sticky-bar{
+      position:fixed;top:0;left:0;right:0;z-index:80;
+      background:rgba(15,10,5,.97);backdrop-filter:blur(12px);
+      transform:translateY(-110%);transition:transform .28s ease;
+      box-shadow:0 4px 24px rgba(0,0,0,.35);
+    }
+    .sticky-bar.visible{transform:translateY(0)}
+    .sticky-top{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.5rem 1.4rem .4rem;
+    }
+    .sticky-logo{
+      height:28px;width:28px;border-radius:6px;object-fit:contain;
+      background:rgba(255,255,255,.05);flex-shrink:0;
+    }
+    .sticky-name{
+      color:white;font-weight:900;font-size:.95rem;letter-spacing:-.3px;
+      margin-left:.55rem;flex:1;
+    }
+    .sticky-name span{color:var(--or)}
+    .sticky-actions{display:flex;gap:.45rem;flex-shrink:0}
+    .sticky-nav{
+      display:flex;gap:.35rem;overflow-x:auto;padding:.3rem 1.4rem .45rem;
+      border-top:1px solid rgba(255,255,255,.08);scrollbar-width:none;
+    }
+    .sticky-nav::-webkit-scrollbar{display:none}
+    .sticky-pill{
+      white-space:nowrap;padding:.28rem .8rem;border-radius:50px;
+      border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);
+      font-size:.73rem;font-weight:700;cursor:pointer;text-decoration:none;
+      transition:all .12s;flex-shrink:0;
+    }
+    .sticky-pill:hover{background:var(--or);border-color:var(--or);color:white}
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero{
+      position:relative;min-height:100vh;
+      display:flex;flex-direction:column;justify-content:flex-end;
+      overflow:hidden;
+    }
+    .hero-video{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center;z-index:0;
+    }
+    /* Fallback si pas de vidéo */
+    .hero-fallback{
+      position:absolute;inset:0;z-index:0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 30%,rgba(201,146,58,.18) 0%,transparent 55%),
+        radial-gradient(ellipse 50% 70% at 20% 80%,rgba(192,57,43,.12) 0%,transparent 60%),
+        linear-gradient(165deg,#0F0A05 0%,#1E1208 30%,#2C1A0A 55%,#1A1005 80%,#0F0A05 100%);
+      display:none;
+    }
+    .hero-overlay{
+      position:absolute;inset:0;z-index:1;
+      background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.45) 40%,rgba(0,0,0,.25) 70%,transparent 100%);
+    }
+    .hero-content{
+      position:relative;z-index:2;
+      width:100%;max-width:860px;margin:0 auto;
+      padding:0 2rem 4.5rem;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:.45rem;
+      background:rgba(201,146,58,.18);border:1px solid rgba(201,146,58,.4);
+      color:var(--or-vif);font-size:.7rem;font-weight:800;
+      padding:.3rem .9rem;border-radius:50px;margin-bottom:1rem;
+      letter-spacing:.8px;text-transform:uppercase;
+    }
+    .hero-logo-wrap{margin-bottom:.75rem}
+    .hero-logo{height:48px;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+    .hero-titre{
+      font-size:clamp(3.5rem,9vw,6rem);font-weight:900;color:white;
+      line-height:.92;margin-bottom:.65rem;letter-spacing:-1px;
+    }
+    .hero-titre em{color:var(--or);font-style:normal}
+    .hero-sub{
+      font-size:1rem;color:rgba(255,255,255,.65);font-weight:700;
+      line-height:1.5;margin-bottom:.5rem;max-width:480px;
+    }
+    .hero-rating{
+      display:inline-flex;align-items:center;gap:.45rem;
+      color:rgba(255,255,255,.5);font-size:.82rem;font-weight:700;margin-bottom:2rem;
+    }
+    .hero-rating strong{color:var(--or-vif)}
+    .hero-actions{display:flex;gap:.65rem;flex-wrap:wrap}
+
+    /* ══════════════════════════════════════════
+       BOUTONS
+    ══════════════════════════════════════════ */
+    .btn{
+      display:inline-flex;align-items:center;gap:.4rem;
+      padding:.7rem 1.4rem;border-radius:50px;
+      font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;
+      text-decoration:none;border:none;cursor:pointer;white-space:nowrap;
+      transition:background .15s,transform .1s,box-shadow .15s;
+    }
+    .btn:active{transform:scale(.95)}
+    .btn-or{background:var(--or);color:white;box-shadow:0 4px 18px rgba(201,146,58,.45)}
+    .btn-or:hover{background:var(--or-vif);box-shadow:0 6px 26px rgba(201,146,58,.55)}
+    .btn-outline{background:transparent;color:white;border:1.5px solid rgba(255,255,255,.38)}
+    .btn-outline:hover{background:rgba(255,255,255,.1)}
+    .btn-dark{background:var(--brun);color:var(--or);box-shadow:var(--s2)}
+    .btn-dark:hover{background:var(--noir)}
+    .btn-wa{background:#25D366;color:white;box-shadow:0 4px 14px rgba(37,211,102,.35)}
+    .btn-wa:hover{background:#1ebe5d}
+    .btn-sm{
+      display:inline-flex;align-items:center;gap:.3rem;
+      padding:.42rem .95rem;border-radius:50px;
+      font-family:'Nunito',sans-serif;font-weight:800;font-size:.76rem;
+      text-decoration:none;border:none;cursor:pointer;
+      transition:background .15s;
+    }
+    .btn-sm-or{background:var(--or);color:white}
+    .btn-sm-or:hover{background:var(--or-vif)}
+    .btn-sm-wa{background:#25D366;color:white}
+    .btn-sm-wa:hover{background:#1ebe5d}
+
+    /* ══════════════════════════════════════════
+       BANDEAU EXPERTISE
+    ══════════════════════════════════════════ */
+    .expertise{
+      background:var(--or);padding:.95rem 1.5rem;
+      display:flex;gap:1.75rem;justify-content:center;align-items:center;flex-wrap:wrap;
+    }
+    .exp-item{display:flex;align-items:center;gap:.45rem;color:white;font-weight:800;font-size:.86rem}
+    .exp-item__icon{font-size:1.15rem}
+
+    /* ══════════════════════════════════════════
+       LAYOUT
+    ══════════════════════════════════════════ */
+    .container{max-width:840px;margin:0 auto;padding:0 1.5rem}
+    section{padding:2.75rem 0}
+    .section-titre{font-size:1.4rem;font-weight:900;margin-bottom:.2rem}
+    .section-sous{color:var(--texte-2);font-size:.84rem;margin-bottom:1.25rem}
+
+    /* CTA commande inline */
+    .commande-cta{
+      display:flex;align-items:center;justify-content:center;
+      gap:.75rem;flex-wrap:wrap;margin:1.75rem 0 .5rem;
+    }
+    .commande-cta__ou{font-size:.8rem;color:var(--texte-2);font-weight:700}
+
+    /* ══════════════════════════════════════════
+       GALERIE PHOTOS
+    ══════════════════════════════════════════ */
+    .photos-section{background:var(--noir);padding:2.5rem 0}
+    .photos-section .section-titre{color:white}
+    .photos-section .section-sous{color:rgba(255,255,255,.38)}
+    .photos-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      grid-template-rows:auto auto;
+      gap:.55rem;margin-top:1.1rem;
+    }
+    .photo-item{
+      border-radius:12px;overflow:hidden;position:relative;
+      background:#1E1208;cursor:pointer;
+    }
+    .photo-item--large{grid-column:span 2;grid-row:span 2}
+    .photo-item__img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      transition:transform .4s ease;min-height:160px;
+    }
+    .photo-item--large .photo-item__img{min-height:340px;object-position:center 20%}
+    .photo-item:hover .photo-item__img{transform:scale(1.04)}
+    .photo-item__fallback{
+      width:100%;min-height:160px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:.35rem;color:rgba(255,255,255,.2);font-size:.7rem;font-weight:700;text-align:center;padding:.75rem;
+    }
+    .photo-item--large .photo-item__fallback{min-height:340px}
+    .photo-item__fallback-icon{font-size:1.8rem;opacity:.3}
+    .photo-item__label{
+      position:absolute;bottom:0;left:0;right:0;padding:.45rem .75rem;
+      background:linear-gradient(to top,rgba(0,0,0,.72) 0%,transparent 100%);
+      color:white;font-size:.7rem;font-weight:800;
+    }
+    .ph1{background:linear-gradient(135deg,#2C1A0A,#8B4513 50%,#C8A84B)}
+    .ph2{background:linear-gradient(135deg,#1A0808,#C0392B 50%,#8B1A10)}
+    .ph3{background:linear-gradient(135deg,#0F0A05,#3D2B1A 50%,#C9923A)}
+    .ph4{background:linear-gradient(135deg,#1E1208,#5C3A1E 50%,#D4A017)}
+    .ph5{background:linear-gradient(135deg,#0F0A05,#C0392B 60%,#7A1210)}
+
+    /* Illustration inline (petite photo à droite d'un titre de section) */
+    .section-head{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.25rem}
+    .section-head__text{flex:1}
+    .section-head__img{
+      width:90px;height:70px;border-radius:10px;object-fit:cover;flex-shrink:0;
+      box-shadow:var(--s2);
+    }
+
+    /* ══════════════════════════════════════════
+       MENU NAV (dans le DOM, visible quand pas scrollé)
+    ══════════════════════════════════════════ */
+    .menu-nav-wrap{
+      position:sticky;top:0;z-index:50;
+      background:rgba(253,250,245,.97);backdrop-filter:blur(12px);
+      padding:.6rem 1.5rem;border-bottom:1px solid var(--gris-bord);
+      box-shadow:0 2px 12px rgba(30,18,8,.07);
+    }
+    .menu-nav-wrap.hide-when-sticky{display:none}
+    .menu-nav{display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none}
+    .menu-nav::-webkit-scrollbar{display:none}
+    .menu-pill{
+      white-space:nowrap;padding:.35rem .85rem;border-radius:50px;
+      border:1.5px solid var(--gris-bord);background:white;color:var(--texte-2);
+      font-size:.76rem;font-weight:700;cursor:pointer;text-decoration:none;
+      transition:all .12s;
+    }
+    .menu-pill:hover,.menu-pill.active{background:var(--brun);color:var(--or);border-color:var(--brun)}
+
+    /* ══════════════════════════════════════════
+       ARTICLES MENU
+    ══════════════════════════════════════════ */
+    .menu-section{padding:2.25rem 0}
+    .menu-section:nth-child(even){background:var(--gris)}
+    .menu-cat__head{
+      display:flex;align-items:center;gap:.7rem;
+      margin-bottom:.85rem;padding-bottom:.5rem;border-bottom:2px solid var(--gris-bord);
+    }
+    .menu-cat__icon{font-size:1.4rem}
+    .menu-cat__titre{font-size:1rem;font-weight:900}
+    .menu-cat__sub{font-size:.73rem;color:var(--texte-2);margin-top:.05rem}
+    .menu-items{display:grid;gap:.45rem}
+    .menu-item{
+      background:white;border-radius:14px;padding:.8rem 1rem;
+      display:flex;align-items:center;gap:.75rem;
+      box-shadow:var(--s1);border:1px solid rgba(30,18,8,.05);
+      transition:transform .12s,box-shadow .12s;
+    }
+    .menu-item:hover{transform:translateY(-1px);box-shadow:var(--s2)}
+    .menu-item__info{flex:1;min-width:0}
+    .menu-item__nom{font-weight:800;font-size:.91rem}
+    .menu-item__ingr{font-size:.73rem;color:var(--texte-2);margin-top:.04rem;line-height:1.35}
+    .menu-item__prix{
+      font-weight:900;color:var(--rouge);font-size:.93rem;
+      white-space:nowrap;flex-shrink:0;text-align:right;line-height:1.3;
+    }
+    .menu-item__prix small{display:block;font-size:.65rem;color:var(--texte-2);font-weight:700}
+
+    /* Tacos grid 2 col */
+    .tacos-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+    .tacos-item{
+      background:white;border-radius:14px;padding:.8rem 1rem;
+      box-shadow:var(--s1);border:1px solid rgba(30,18,8,.05);
+      transition:transform .12s,box-shadow .12s;display:flex;flex-direction:column;
+    }
+    .tacos-item:hover{transform:translateY(-1px);box-shadow:var(--s2)}
+    .tacos-item__nom{font-weight:800;font-size:.86rem;margin-bottom:.18rem}
+    .tacos-item__desc{font-size:.72rem;color:var(--texte-2);flex:1;line-height:1.35;margin-bottom:.3rem}
+    .tacos-item__prix{font-weight:900;color:var(--rouge);font-size:.88rem}
+    .tacos-item__prix small{font-size:.66rem;color:var(--texte-2);font-weight:700}
+
+    /* Sauces */
+    .sauces-chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.65rem}
+    .sauce-chip{
+      background:var(--or-lt);color:var(--texte-2);border:1px solid var(--gris-bord);
+      font-size:.67rem;font-weight:700;padding:.18rem .5rem;border-radius:50px;
+    }
+
+    /* Photo illustration dans le menu */
+    .menu-photo-strip{
+      display:flex;gap:.45rem;margin:.75rem 0 .5rem;overflow-x:auto;scrollbar-width:none;
+    }
+    .menu-photo-strip::-webkit-scrollbar{display:none}
+    .menu-photo-strip__img{
+      height:100px;width:140px;border-radius:10px;object-fit:cover;flex-shrink:0;
+      box-shadow:var(--s2);
+    }
+    /* Masquer le bas d'une photo (ex: URL visible) */
+    .crop-bottom .menu-photo-strip__img{object-position:top center}
+
+    /* ══════════════════════════════════════════
+       SUR COMMANDE (section sombre)
+    ══════════════════════════════════════════ */
+    .commande-section{background:var(--brun);padding:2.75rem 0}
+    .commande-section .section-titre{color:white}
+    .commande-section .section-sous{color:rgba(255,255,255,.4)}
+    .commande-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:1.1rem}
+    .commande-card{
+      background:rgba(255,255,255,.06);border:1px solid rgba(201,146,58,.2);
+      border-radius:14px;padding:1rem;text-align:center;
+      transition:background .2s,border-color .2s;
+    }
+    .commande-card:hover{background:rgba(201,146,58,.1);border-color:rgba(201,146,58,.4)}
+    .commande-card__icon{font-size:1.8rem;margin-bottom:.45rem;display:block}
+    .commande-card__nom{color:var(--or-vif);font-weight:900;font-size:.86rem;margin-bottom:.2rem}
+    .commande-card__desc{color:rgba(255,255,255,.42);font-size:.71rem;line-height:1.4}
+
+    /* Photo strip sur fond sombre */
+    .commande-photo-strip{
+      display:flex;gap:.45rem;margin:1.1rem 0 .5rem;overflow-x:auto;scrollbar-width:none;
+    }
+    .commande-photo-strip::-webkit-scrollbar{display:none}
+    .commande-photo-strip__img{
+      height:120px;width:160px;border-radius:10px;object-fit:cover;flex-shrink:0;
+      box-shadow:0 4px 20px rgba(0,0,0,.4);
+    }
+
+    /* ══════════════════════════════════════════
+       DESSERTS / BOISSONS 2 colonnes
+    ══════════════════════════════════════════ */
+    .deux-col{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+
+    /* Photos desserts */
+    .desserts-photos{display:flex;gap:.45rem;margin:.65rem 0 .85rem;overflow-x:auto;scrollbar-width:none}
+    .desserts-photos::-webkit-scrollbar{display:none}
+    .desserts-photos__img{
+      height:85px;width:110px;border-radius:9px;object-fit:cover;flex-shrink:0;box-shadow:var(--s2);
+    }
+
+    /* ══════════════════════════════════════════
+       INFOS PRATIQUES
+    ══════════════════════════════════════════ */
+    .infos-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+    .info-card{
+      background:white;border-radius:15px;padding:1rem;
+      display:flex;align-items:flex-start;gap:.75rem;box-shadow:var(--s2);
+    }
+    .info-card__icon{
+      width:40px;height:40px;border-radius:11px;flex-shrink:0;
+      background:var(--or-lt);display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+    }
+    .info-card__label{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--texte-2);margin-bottom:.18rem}
+    .info-card__val{font-size:.9rem;font-weight:800;line-height:1.4}
+    .info-card__sub{font-size:.74rem;color:var(--texte-2);margin-top:.06rem}
+    .info-card--full{grid-column:1/-1}
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer{
+      background:var(--noir);color:rgba(255,255,255,.38);
+      text-align:center;padding:2.5rem 1.5rem;font-size:.78rem;line-height:1.9;
+    }
+    footer strong{color:var(--or)}
+    footer a{color:rgba(255,255,255,.52);text-decoration:none;transition:color .15s}
+    footer a:hover{color:var(--or)}
+
+    /* ══════════════════════════════════════════
+       PANIER FAB
+    ══════════════════════════════════════════ */
+    .cart-fab{
+      position:fixed;bottom:22px;right:22px;z-index:100;
+      width:58px;height:58px;border-radius:50%;border:none;
+      background:var(--or);color:white;font-size:1.45rem;
+      box-shadow:0 6px 26px rgba(201,146,58,.55);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:transform .15s,box-shadow .15s;
+    }
+    .cart-fab:hover{transform:scale(1.06);box-shadow:0 8px 34px rgba(201,146,58,.7)}
+    .cart-fab:active{transform:scale(.93)}
+    .cart-fab__badge{
+      position:absolute;top:-4px;right:-4px;
+      background:var(--rouge);color:white;font-size:.66rem;font-weight:900;
+      min-width:20px;height:20px;border-radius:50%;padding:0 4px;border:2px solid white;
+      display:flex;align-items:center;justify-content:center;
+      transform:scale(0);opacity:0;transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .2s;
+    }
+    .cart-fab__badge.visible{transform:scale(1);opacity:1}
+    .add-to-cart-btn{
+      width:29px;height:29px;border-radius:50%;border:1.5px solid var(--gris-bord);
+      background:white;color:var(--texte);font-size:1.15rem;line-height:1;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      font-family:'Nunito',sans-serif;font-weight:700;flex-shrink:0;
+      transition:background .12s,border-color .12s,transform .1s;
+    }
+    .add-to-cart-btn:hover{background:var(--or-lt);border-color:var(--or)}
+    .add-to-cart-btn:active{transform:scale(.88)}
+
+    /* ══════════════════════════════════════════
+       MODAL PANIER
+    ══════════════════════════════════════════ */
+    .cart-overlay{
+      position:fixed;inset:0;z-index:200;
+      background:rgba(0,0,0,.6);backdrop-filter:blur(4px);
+      display:none;align-items:flex-end;justify-content:center;
+    }
+    .cart-overlay.open{display:flex}
+    .cart-modal{
+      background:white;width:100%;max-width:520px;
+      border-radius:22px 22px 0 0;max-height:88vh;overflow:hidden;
+      display:flex;flex-direction:column;
+      box-shadow:0 -10px 50px rgba(0,0,0,.28);
+      animation:cartUp .32s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes cartUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+    .cart-modal__head{
+      padding:1.05rem 1.2rem .85rem;border-bottom:1px solid var(--gris-bord);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .cart-modal__titre{font-size:1.05rem;font-weight:900}
+    .cart-modal__close{
+      width:29px;height:29px;border-radius:50%;border:none;
+      background:var(--gris);cursor:pointer;font-size:.95rem;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .cart-modal__body{flex:1;overflow-y:auto;padding:.7rem 1.2rem}
+    .cart-empty{text-align:center;color:var(--texte-2);padding:2rem 0;font-size:.86rem}
+    .cart-line{display:flex;align-items:center;gap:.55rem;padding:.5rem 0;border-bottom:1px solid var(--gris)}
+    .cart-line:last-child{border-bottom:none}
+    .cart-line__nom{flex:1;font-weight:700;font-size:.86rem}
+    .cart-line__ctrl{display:flex;align-items:center;gap:.32rem;flex-shrink:0}
+    .cart-ctrl-btn{
+      width:23px;height:23px;border-radius:50%;border:1.5px solid var(--gris-bord);background:white;
+      cursor:pointer;font-size:.95rem;line-height:1;display:flex;align-items:center;justify-content:center;
+      font-family:'Nunito',sans-serif;transition:border-color .1s,background .1s;
+    }
+    .cart-ctrl-btn:hover{border-color:var(--or);background:var(--or-lt)}
+    .cart-line__qty{font-weight:900;font-size:.9rem;min-width:17px;text-align:center}
+    .cart-line__prix{font-weight:800;color:var(--rouge);font-size:.86rem;white-space:nowrap;flex-shrink:0}
+    .cart-modal__foot{padding:.85rem 1.2rem;border-top:1px solid var(--gris-bord);flex-shrink:0}
+    .cart-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.8rem}
+    .cart-total__label{font-weight:700;font-size:.83rem;color:var(--texte-2)}
+    .cart-total__val{font-weight:900;font-size:1.2rem;color:var(--rouge)}
+    .cart-mode{display:flex;gap:.45rem;margin-bottom:.7rem}
+    .cart-mode-btn{
+      flex:1;padding:.55rem .4rem;border-radius:11px;border:2px solid var(--gris-bord);
+      background:white;cursor:pointer;font-family:'Nunito',sans-serif;
+      font-weight:700;font-size:.8rem;transition:all .15s;text-align:center;
+    }
+    .cart-mode-btn.active{border-color:var(--or);background:var(--or-lt);color:var(--texte)}
+    .cart-note{
+      width:100%;border:1.5px solid var(--gris-bord);border-radius:10px;
+      padding:.55rem .8rem;font-family:'Nunito',sans-serif;font-size:.86rem;
+      margin-bottom:.7rem;outline:none;color:var(--texte);display:none;transition:border-color .15s;
+    }
+    .cart-note:focus{border-color:var(--or)}
+    .cart-note.show{display:block}
+    .cart-instructions{
+      width:100%;border:1.5px solid var(--gris-bord);border-radius:10px;
+      padding:.55rem .8rem;font-family:'Nunito',sans-serif;font-size:.83rem;
+      margin-bottom:.7rem;outline:none;color:var(--texte);resize:none;
+      line-height:1.45;transition:border-color .15s;min-height:60px;
+    }
+    .cart-instructions:focus{border-color:var(--or)}
+    .cart-instructions::placeholder{color:var(--texte-2)}
+    .cart-instructions-label{
+      font-size:.72rem;font-weight:800;color:var(--texte-2);
+      text-transform:uppercase;letter-spacing:.5px;
+      display:block;margin-bottom:.3rem;
+    }
+    .cart-send-btn{
+      width:100%;padding:.85rem;border-radius:13px;border:none;
+      background:#25D366;color:white;font-family:'Nunito',sans-serif;
+      font-weight:800;font-size:.93rem;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:.45rem;
+      box-shadow:0 4px 16px rgba(37,211,102,.38);transition:background .15s,opacity .15s;
+    }
+    .cart-send-btn:hover{background:#1ebe5d}
+    .cart-send-btn:disabled{opacity:.35;cursor:default}
+
+    /* ══════════════════════════════════════════
+       ASTUCE POPUP
+    ══════════════════════════════════════════ */
+    .astuce-popup{
+      position:fixed;bottom:90px;right:16px;z-index:99;
+      background:white;border-radius:16px;padding:.95rem 1.05rem .8rem;
+      width:238px;box-shadow:0 8px 32px rgba(0,0,0,.18);
+      border:1.5px solid rgba(0,0,0,.07);
+      transform:scale(.85) translateY(16px);opacity:0;pointer-events:none;
+      transition:transform .32s cubic-bezier(.34,1.56,.64,1),opacity .25s;
+    }
+    .astuce-popup.show{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
+    .astuce-popup__close{
+      position:absolute;top:8px;right:10px;
+      background:none;border:none;cursor:pointer;font-size:.95rem;color:#bbb;line-height:1;
+    }
+    .astuce-popup__titre{font-weight:900;font-size:.83rem;margin-bottom:.5rem;color:var(--texte)}
+    .astuce-popup__step{font-size:.73rem;color:var(--texte-2);line-height:1.6}
+    .astuce-popup::after{
+      content:'';position:absolute;bottom:-7px;right:20px;
+      width:14px;height:7px;background:white;clip-path:polygon(0 0,100% 0,50% 100%);
+    }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media(max-width:680px){
+      html{scroll-padding-top:105px}
+      .hero-content{padding:0 1.25rem 3rem}
+      .hero-titre{font-size:3.2rem}
+      .infos-grid{grid-template-columns:1fr}
+      .info-card--full{grid-column:auto}
+      .deux-col{grid-template-columns:1fr}
+      .commande-grid{grid-template-columns:1fr 1fr}
+      .photos-grid{grid-template-columns:1fr 1fr}
+      .photo-item--large{grid-column:span 2;grid-row:span 1}
+      .photo-item--large .photo-item__img,
+      .photo-item--large .photo-item__fallback{min-height:200px}
+      .tacos-grid{grid-template-columns:1fr}
+      .expertise{gap:.75rem;padding:.8rem 1rem}
+      .sticky-top{padding:.45rem 1rem .35rem}
+      .sticky-nav{padding:.25rem 1rem .4rem}
+      .section-head{flex-direction:column}
+      .section-head__img{width:100%;height:120px}
+    }
+    @media(max-width:400px){
+      .photos-grid{grid-template-columns:1fr}
+      .photo-item--large{grid-column:auto;grid-row:auto}
+      .commande-grid{grid-template-columns:1fr}
+    }
+    .sel-toggle{display:flex;gap:.2rem;margin-top:.3rem;flex-wrap:wrap}
+    .sel-opt{min-width:40px;padding:.22rem .38rem;border-radius:8px;border:1.5px solid var(--gris-bord);background:#fff;font-family:'Nunito',sans-serif;font-size:.6rem;font-weight:800;cursor:pointer;text-align:center;color:var(--texte-2);line-height:1.3;transition:background .12s,border-color .12s,color .12s}
+    .sel-opt.active{background:var(--rouge);border-color:var(--rouge);color:#fff}
+    .sel-opt__prix{display:block;font-size:.7rem;font-weight:900}
+    .assiette-mixte-item{flex-direction:column;align-items:stretch;gap:.25rem}
+    .assiette-viande-row{display:flex;align-items:flex-start;gap:.4rem;margin-top:.35rem;flex-wrap:wrap}
+    .assiette-viande-lbl{font-size:.68rem;font-weight:900;color:var(--texte-2);white-space:nowrap;padding-top:.26rem;min-width:42px}
+    .assiette-mixte-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.5rem}
+    .assiette-mixte-formula{font-size:.82rem;font-weight:900;color:var(--rouge)}
+    .assiette-mixte-item .sel-opt[disabled]{opacity:.28;cursor:not-allowed}
+    .assiette-legend{background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.16);border-radius:8px;padding:.5rem .65rem;font-size:.68rem;color:var(--texte-2);line-height:1.5;margin-top:.3rem}
+    .assiette-legend strong{color:var(--texte)}
+    .assiette-legend-prix{display:flex;gap:.45rem;margin-top:.3rem;font-weight:900;color:var(--rouge);flex-wrap:wrap;font-size:.72rem}
+    .assiette-viandes{display:flex;flex-wrap:wrap;gap:.2rem;margin-top:.35rem}
+    .assiette-viandes .sel-opt[data-type="A"]{border-color:var(--or-vif)}
+    .assiette-viandes .sel-opt.sel-v1{background:var(--rouge);border-color:var(--rouge);color:#fff}
+    .assiette-viandes .sel-opt.sel-v2{background:rgba(192,57,43,.22);border-color:var(--rouge);color:var(--texte)}
+    .assiette-mixte-add[disabled]{opacity:.38;cursor:not-allowed}
+
+    /* ══ POPUP HORAIRES ══ */
+    .horaires-popup{
+      position:fixed;top:16px;left:16px;z-index:91;
+      background:white;border-radius:16px;padding:.9rem 2.2rem .9rem 1rem;
+      min-width:196px;box-shadow:0 8px 28px rgba(0,0,0,.16);
+      border:1.5px solid rgba(0,0,0,.07);
+      opacity:0;transform:translateY(-12px) scale(.9);
+      pointer-events:none;
+      transition:opacity .35s ease,transform .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    .horaires-popup.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+    .horaires-popup.hide{opacity:0;transform:translateY(-8px) scale(.94);transition:opacity .4s ease,transform .4s ease}
+    .horaires-popup__close{
+      position:absolute;top:7px;right:9px;
+      background:none;border:none;cursor:pointer;
+      font-size:.8rem;color:#c0b0a0;padding:2px 4px;line-height:1;
+    }
+    .horaires-popup__close:hover{color:#888}
+    .horaires-popup__jour{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--texte-2);margin-bottom:.28rem}
+    .horaires-popup__statut{font-size:.97rem;font-weight:900;margin-bottom:.18rem}
+    .horaires-popup__statut--ouvert{color:#1A9A55}
+    .horaires-popup__statut--ferme{color:var(--rouge)}
+    .horaires-popup__horaire{font-size:.75rem;color:var(--texte-2);font-weight:700}
+    .horaires-popup__barre{
+      position:absolute;bottom:0;left:0;
+      height:3px;border-radius:0 0 16px 16px;
+      background:linear-gradient(90deg,var(--or),var(--rouge));
+      animation:hpCountdown 30s linear forwards;
+    }
+    @keyframes hpCountdown{from{width:100%}to{width:0%}}
+  </style>
+</head>
+<body>
+
+<!-- ══ STICKY BAR (titre + menu nav) ══ -->
+<nav class="sticky-bar" id="sticky-bar" aria-label="Navigation">
+  <div class="sticky-top">
+    <img src="logo/logo detoure bosphore.png" alt="Logo Bosphore" class="sticky-logo"
+         onerror="this.style.display='none'">
+    <span class="sticky-name"><span>Bosphore</span> · Tullins</span>
+    <div class="sticky-actions">
+      <a href="tel:0476358886" class="btn-sm btn-sm-or">📞 Appeler</a>
+      <button class="btn-sm btn-sm-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Commander</button>
+    </div>
+  </div>
+  <div class="sticky-nav" aria-label="Catégories">
+    <a href="#entrees"   class="sticky-pill">🥗 Entrées</a>
+    <a href="#assiettes" class="sticky-pill">🍽️ Assiettes</a>
+    <a href="#burgers"   class="sticky-pill">🍔 Burgers</a>
+    <a href="#sandwichs" class="sticky-pill">🥙 Sandwichs</a>
+    <a href="#tacos"     class="sticky-pill">🌯 Tacos</a>
+    <a href="#commande"  class="sticky-pill">✨ Sur commande</a>
+    <a href="#desserts"  class="sticky-pill">🍮 Desserts</a>
+    <a href="#boissons"  class="sticky-pill">🥤 Boissons</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="hero">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" id="hero-video">
+    <source src="hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-fallback" id="hero-fallback"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🕌 Depuis 14 ans à Tullins-Fures · Isère</div>
+    <div class="hero-logo-wrap">
+      <img src="logo/logo detoure bosphore.png" alt="Bosphore" class="hero-logo"
+           onerror="this.style.display='none'">
+    </div>
+    <h1 class="hero-titre"><em>Bosphore</em></h1>
+    <p class="hero-sub">Kebab 100&nbsp;% veau · Tacos · Burgers maison<br>Des produits frais, des recettes authentiques</p>
+    <div class="hero-rating">
+      <strong>⭐ 4,6/5</strong> · 310 avis Google · ☪️ Halal certifié
+    </div>
+    <nav class="hero-actions">
+      <a href="tel:0476358886" class="btn btn-or">📞 Appeler</a>
+      <button class="btn btn-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Commander par WhatsApp</button>
+      <a href="#menu" class="btn btn-outline">Voir la carte ↓</a>
+    </nav>
+  </div>
+</section>
+
+<!-- ══ BANDEAU EXPERTISE ══ -->
+<div class="expertise">
+  <div class="exp-item"><span class="exp-item__icon">🏆</span>14 ans d'expérience</div>
+  <div class="exp-item"><span class="exp-item__icon">🥩</span>Kebab 100&nbsp;% veau</div>
+  <div class="exp-item"><span class="exp-item__icon">👨‍🍳</span>Recettes maison</div>
+  <div class="exp-item"><span class="exp-item__icon">🌿</span>Terrasse &amp; Jardin</div>
+  <div class="exp-item"><span class="exp-item__icon">⭐</span>4,6/5 · 310 avis</div>
+</div>
+
+<!-- ══ GALERIE PHOTOS ══ -->
+<section class="photos-section">
+  <div class="container">
+    <h2 class="section-titre" style="color:white">Notre cuisine</h2>
+    <p class="section-sous">Photos du restaurant · Bosphore Tullins-Fures</p>
+    <div class="photos-grid">
+
+      <!-- Grande : broche veau signature -->
+      <div class="photo-item photo-item--large">
+        <img src="photos/food bosphore 15.webp" alt="Broche kebab veau 100% Halal — Bosphore Tullins"
+             class="photo-item__img" loading="eager"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="photo-item__fallback ph1" style="display:none">
+          <span class="photo-item__fallback-icon">🥩</span>
+        </div>
+        <div class="photo-item__label">Kebab 100&nbsp;% veau — Halal certifié</div>
+      </div>
+
+      <!-- Assiette kebab -->
+      <div class="photo-item">
+        <img src="photos/food bosphore 2.webp" alt="Assiette kebab complète — Bosphore"
+             class="photo-item__img" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="photo-item__fallback ph2" style="display:none">
+          <span class="photo-item__fallback-icon">🍽️</span>
+        </div>
+        <div class="photo-item__label">Assiette kebab</div>
+      </div>
+
+      <!-- Tacos ouvert -->
+      <div class="photo-item">
+        <img src="photos/food bosphore 5.webp" alt="Tacos maison — Bosphore Tullins"
+             class="photo-item__img" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="photo-item__fallback ph3" style="display:none">
+          <span class="photo-item__fallback-icon">🌯</span>
+        </div>
+        <div class="photo-item__label">Tacos maison</div>
+      </div>
+
+      <!-- Grand mezzé -->
+      <div class="photo-item">
+        <img src="photos/food bosphore 13.webp" alt="Grand mezzé oriental — Bosphore"
+             class="photo-item__img" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="photo-item__fallback ph4" style="display:none">
+          <span class="photo-item__fallback-icon">🥗</span>
+        </div>
+        <div class="photo-item__label">Grand mezzé oriental</div>
+      </div>
+
+      <!-- Baklava -->
+      <div class="photo-item">
+        <img src="photos/food bosphore 7.webp" alt="Baklava maison — Bosphore Tullins"
+             class="photo-item__img" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="photo-item__fallback ph5" style="display:none">
+          <span class="photo-item__fallback-icon">🍮</span>
+        </div>
+        <div class="photo-item__label">Baklava maison</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ MENU NAV (dans le DOM) ══ -->
+<div class="menu-nav-wrap" id="menu">
+  <nav class="menu-nav" aria-label="Catégories du menu">
+    <a href="#entrees"   class="menu-pill">🥗 Entrées</a>
+    <a href="#assiettes" class="menu-pill">🍽️ Assiettes</a>
+    <a href="#burgers"   class="menu-pill">🍔 Burgers</a>
+    <a href="#sandwichs" class="menu-pill">🥙 Sandwichs</a>
+    <a href="#tacos"     class="menu-pill">🌯 Tacos</a>
+    <a href="#commande"  class="menu-pill">✨ Sur commande</a>
+    <a href="#desserts"  class="menu-pill">🍮 Desserts</a>
+    <a href="#boissons"  class="menu-pill">🥤 Boissons</a>
+  </nav>
+</div>
+
+<!-- ══ ENTRÉES ══ -->
+<section class="menu-section" id="entrees">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__text">
+        <div class="menu-cat__head" style="border:none;margin-bottom:.2rem">
+          <span class="menu-cat__icon">🥗</span>
+          <div><div class="menu-cat__titre">Entrées &amp; Salades</div><div class="menu-cat__sub">Préparées chaque jour · Recettes orientales authentiques</div></div>
+        </div>
+      </div>
+      <img src="photos/food bosphore 14.webp" alt="Kısır taboulé de boulgour" class="section-head__img"
+           onerror="this.style.display='none'">
+    </div>
+    <div class="menu-items">
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Taboulé maison</div><div class="menu-item__ingr">Semoule fine, persil frais, tomate, citron, huile d'olive</div></div><div class="menu-item__prix">11,00 €</div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Houmous</div><div class="menu-item__ingr">Pois chiches, tahini, ail, citron, huile d'olive</div></div><div class="menu-item__prix">11,00 €</div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Cacık</div><div class="menu-item__ingr">Yaourt turc, concombre, ail, menthe fraîche</div></div><div class="menu-item__prix">11,00 €</div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Acı Ezme</div><div class="menu-item__ingr">Tomate, poivron, oignon, épices orientales</div></div><div class="menu-item__prix">11,00 €</div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Mezzé mixte</div><div class="menu-item__ingr">Assortiment taboulé, houmous, cacık, ezme — idéal pour partager</div></div><div class="menu-item__prix">17,00 €</div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Salade au choix</div><div class="menu-item__ingr">Berger · Thon · Poulet · Suçuk</div></div><div class="menu-item__prix">10,00 €</div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Frites</div><div class="menu-item__ingr">Petite ou grande portion</div></div><div class="menu-item__prix">2,00 – 2,50 €</div></div>
+    </div>
+    <div class="commande-cta">
+      <a href="tel:0476358886" class="btn btn-dark">📞 Appeler</a>
+      <span class="commande-cta__ou">ou</span>
+      <button class="btn btn-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Ajouter au panier</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ASSIETTES ══ -->
+<section class="menu-section" id="assiettes">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__text">
+        <div class="menu-cat__head" style="border:none;margin-bottom:.2rem">
+          <span class="menu-cat__icon">🍽️</span>
+          <div><div class="menu-cat__titre">Assiettes</div><div class="menu-cat__sub">Viandes fraîches, garnitures généreuses</div></div>
+        </div>
+      </div>
+      <img src="photos/food bosphore 4.webp" alt="Assiette sucuk sur crudités" class="section-head__img"
+           onerror="this.style.display='none'">
+    </div>
+    <!-- Strip photos assiettes -->
+    <div class="menu-photo-strip">
+      <img src="photos/food bosphore 12.webp" alt="Assiette köfte" class="menu-photo-strip__img"
+           onerror="this.style.display='none'">
+      <img src="photos/food bosphore 2.webp" alt="Assiette kebab" class="menu-photo-strip__img"
+           onerror="this.style.display='none'">
+      <img src="photos/food bosphore 4.webp" alt="Assiette sucuk" class="menu-photo-strip__img"
+           onerror="this.style.display='none'">
+    </div>
+    <div class="menu-items">
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Assiette Kebab</div><div class="menu-item__ingr">Kebab 100&nbsp;% veau, salade, tomate, oignons, sauce maison</div></div><div class="menu-item__prix">17,00 €</div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Assiette Köfte maison</div><div class="menu-item__ingr">Boulettes 100&nbsp;% agneau façon maison</div></div><div class="menu-item__prix">18,00 €</div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Assiette Merguez</div><div class="menu-item__ingr">Merguez grillées, sauce harissa maison</div></div><div class="menu-item__prix">17,50 €</div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Assiette Simple</div><div class="menu-item__ingr">1 viande au choix · salade, tomate, oignons</div></div><div class="menu-item__prix" style="display:none">14,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="14" data-label="Steak">Steak<span class="sel-opt__prix">14,00 €</span></button><button class="sel-opt" data-prix="14" data-label="Escalope">Escalope<span class="sel-opt__prix">14,00 €</span></button><button class="sel-opt" data-prix="14" data-label="Cordon bleu">C. bleu<span class="sel-opt__prix">14,00 €</span></button><button class="sel-opt" data-prix="14" data-label="Suçuk">Suçuk<span class="sel-opt__prix">14,00 €</span></button><button class="sel-opt" data-prix="14" data-label="Falafel">Falafel<span class="sel-opt__prix">14,00 €</span></button></div></div>
+      <div class="menu-item assiette-mixte-item" data-custom-add="true"><div class="menu-item__info"><div class="menu-item__nom">Assiette Mixte</div><div class="menu-item__ingr">2 viandes au choix · salade, tomate, oignons</div></div><div class="assiette-legend"><div><strong>A :</strong> Merguez, Kebab &nbsp;·&nbsp; <strong>B :</strong> Steak, Escalope, Cordon bleu, Suçuk, Falafel</div><div class="assiette-legend-prix"><span>A+A — 18,00 €</span><span>A+B — 16,50 €</span><span>B+B — 16,00 €</span></div></div><div class="assiette-viandes"><button class="sel-opt" data-viande="Merguez" data-type="A">Merguez</button><button class="sel-opt" data-viande="Kebab" data-type="A">Kebab</button><button class="sel-opt" data-viande="Steak" data-type="B">Steak</button><button class="sel-opt" data-viande="Escalope" data-type="B">Escalope</button><button class="sel-opt" data-viande="Cordon bleu" data-type="B">C.bleu</button><button class="sel-opt" data-viande="Suçuk" data-type="B">Suçuk</button><button class="sel-opt" data-viande="Falafel" data-type="B">Falafel</button></div><div class="assiette-mixte-footer"><span class="assiette-mixte-formula" id="mixte-formula-lbl">Choisissez 2 viandes</span><button class="add-to-cart-btn assiette-mixte-add" aria-label="Ajouter Assiette Mixte" disabled>+</button></div></div>
+    </div>
+    <div class="commande-cta">
+      <a href="tel:0476358886" class="btn btn-dark">📞 Appeler</a>
+      <span class="commande-cta__ou">ou</span>
+      <button class="btn btn-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Ajouter au panier</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BURGERS ══ -->
+<section class="menu-section" id="burgers">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__text">
+        <div class="menu-cat__head" style="border:none;margin-bottom:.2rem">
+          <span class="menu-cat__icon">🍔</span>
+          <div><div class="menu-cat__titre">Burgers Maison</div><div class="menu-cat__sub">Pain artisan · Viandes halal · Menu disponible (+frites +boisson 33 cl)</div></div>
+        </div>
+      </div>
+      <img src="photos/food bosphore 6.webp" alt="Burger maison bosphore" class="section-head__img"
+           onerror="this.style.display='none'">
+    </div>
+    <div class="menu-items">
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Burger Agneau</div><div class="menu-item__ingr">Steak d'agneau, salade, tomate, oignons, sauce maison</div></div><div class="menu-item__prix" style="display:none">8,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="8" data-label="seul">Seul<span class="sel-opt__prix">8,00 €</span></button><button class="sel-opt" data-prix="11.5" data-label="menu">Menu<span class="sel-opt__prix">11,50 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Burger Veau</div><div class="menu-item__ingr">Steak de veau, cheddar, salade, sauce bosphore</div></div><div class="menu-item__prix" style="display:none">8,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="8" data-label="seul">Seul<span class="sel-opt__prix">8,00 €</span></button><button class="sel-opt" data-prix="11.5" data-label="menu">Menu<span class="sel-opt__prix">11,50 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Burger Merguez</div><div class="menu-item__ingr">Merguez grillée, oignons, harissa douce</div></div><div class="menu-item__prix" style="display:none">7,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="7" data-label="seul">Seul<span class="sel-opt__prix">7,00 €</span></button><button class="sel-opt" data-prix="10.5" data-label="menu">Menu<span class="sel-opt__prix">10,50 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Burger Suçuk</div><div class="menu-item__ingr">Saucisse turque épicée, fromage fondu, sauce yaourt</div></div><div class="menu-item__prix" style="display:none">7,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="7" data-label="seul">Seul<span class="sel-opt__prix">7,00 €</span></button><button class="sel-opt" data-prix="10.5" data-label="menu">Menu<span class="sel-opt__prix">10,50 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Chicken Burger</div><div class="menu-item__ingr">Filet de poulet, salade, tomate, sauce yaourt-menthe</div></div><div class="menu-item__prix" style="display:none">7,50 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="7.5" data-label="seul">Seul<span class="sel-opt__prix">7,50 €</span></button><button class="sel-opt" data-prix="11.5" data-label="menu">Menu<span class="sel-opt__prix">11,50 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Cheese Classique</div><div class="menu-item__ingr">Steak, fromage fondu, sauce</div></div><div class="menu-item__prix" style="display:none">5,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="5" data-label="seul">Seul<span class="sel-opt__prix">5,00 €</span></button><button class="sel-opt" data-prix="8.5" data-label="menu">Menu<span class="sel-opt__prix">8,50 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Cheese Maxi</div><div class="menu-item__ingr">Double fromage, version généreuse</div></div><div class="menu-item__prix" style="display:none">7,50 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="7.5" data-label="seul">Seul<span class="sel-opt__prix">7,50 €</span></button><button class="sel-opt" data-prix="11" data-label="menu">Menu<span class="sel-opt__prix">11,00 €</span></button></div></div>
+    </div>
+    <div class="commande-cta">
+      <a href="tel:0476358886" class="btn btn-dark">📞 Appeler</a>
+      <span class="commande-cta__ou">ou</span>
+      <button class="btn btn-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Ajouter au panier</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SANDWICHS ══ -->
+<section class="menu-section" id="sandwichs">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__text">
+        <div class="menu-cat__head" style="border:none;margin-bottom:.2rem">
+          <span class="menu-cat__icon">🥙</span>
+          <div><div class="menu-cat__titre">Sandwichs &amp; Galettes</div><div class="menu-cat__sub">Pain maison · Galette turque · Miche artisan</div></div>
+        </div>
+      </div>
+      <img src="photos/food bosphore.webp" alt="Sandwich merguez maison" class="section-head__img"
+           onerror="this.style.display='none'">
+    </div>
+    <div class="menu-photo-strip">
+      <img src="photos/food bosphore.webp" alt="Sandwich merguez" class="menu-photo-strip__img"
+           onerror="this.style.display='none'">
+      <img src="photos/food bosphore 1.webp" alt="Galette roulée grillée" class="menu-photo-strip__img"
+           onerror="this.style.display='none'">
+      <img src="photos/food bosphore 9.webp" alt="Miche kebab" class="menu-photo-strip__img crop-bottom"
+           onerror="this.style.display='none'" style="object-position:top center">
+    </div>
+    <div class="menu-items">
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Sandwich Kebab</div><div class="menu-item__ingr">Veau 100&nbsp;%, salade, tomate, sauce au choix</div></div><div class="menu-item__prix" style="display:none">9,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="9" data-label="seul">Seul<span class="sel-opt__prix">9,00 €</span></button><button class="sel-opt" data-prix="10" data-label="+frites">+Frites<span class="sel-opt__prix">10,00 €</span></button><button class="sel-opt" data-prix="12.5" data-label="menu">Menu<span class="sel-opt__prix">12,50 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Sandwich Köfte maison</div><div class="menu-item__ingr">Boulettes 100&nbsp;% agneau, oignons, tomate</div></div><div class="menu-item__prix" style="display:none">10,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="10" data-label="seul">Seul<span class="sel-opt__prix">10,00 €</span></button><button class="sel-opt" data-prix="13.5" data-label="menu">Menu<span class="sel-opt__prix">13,50 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Sandwich Merguez</div><div class="menu-item__ingr">Merguez, oignons, harissa, moutarde</div></div><div class="menu-item__prix" style="display:none">9,50 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="9.5" data-label="seul">Seul<span class="sel-opt__prix">9,50 €</span></button><button class="sel-opt" data-prix="13" data-label="menu">Menu<span class="sel-opt__prix">13,00 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Sandwich Escalope / Suçuk / Falafel</div><div class="menu-item__ingr">Viande au choix, garniture fraîche</div></div><div class="menu-item__prix" style="display:none">8,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="8" data-label="seul">Seul<span class="sel-opt__prix">8,00 €</span></button><button class="sel-opt" data-prix="11.5" data-label="menu">Menu<span class="sel-opt__prix">11,50 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Galette Kebab</div><div class="menu-item__ingr">Pain galette turc, veau, légumes frais</div></div><div class="menu-item__prix" style="display:none">9,50 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="9.5" data-label="seul">Seul<span class="sel-opt__prix">9,50 €</span></button><button class="sel-opt" data-prix="13" data-label="menu">Menu<span class="sel-opt__prix">13,00 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Galette Double</div><div class="menu-item__ingr">Double viande en galette — pour les grands appétits</div></div><div class="menu-item__prix" style="display:none">14,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="14" data-label="seul">Seul<span class="sel-opt__prix">14,00 €</span></button><button class="sel-opt" data-prix="17" data-label="menu">Menu<span class="sel-opt__prix">17,00 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Miche Kebab</div><div class="menu-item__ingr">Pain miche artisan, kebab, garniture généreuse</div></div><div class="menu-item__prix" style="display:none">9,50 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="9.5" data-label="seul">Seul<span class="sel-opt__prix">9,50 €</span></button><button class="sel-opt" data-prix="13" data-label="menu">Menu<span class="sel-opt__prix">13,00 €</span></button></div></div>
+      <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Menu Toast</div><div class="menu-item__ingr">Sandwich toasté + frites + boisson 33 cl</div></div><div class="menu-item__prix">8,50 €</div></div>
+    </div>
+    <div class="sauces-chips">
+      <span style="font-size:.7rem;font-weight:800;color:var(--texte-2);align-self:center;">13 sauces :</span>
+      <span class="sauce-chip">Blanche</span><span class="sauce-chip">Harissa</span>
+      <span class="sauce-chip">Mayonnaise</span><span class="sauce-chip">Ketchup</span>
+      <span class="sauce-chip">Curry</span><span class="sauce-chip">Samouraï</span>
+      <span class="sauce-chip">Barbecue</span><span class="sauce-chip">Tartare</span>
+      <span class="sauce-chip">Biggy</span><span class="sauce-chip">Burger</span>
+      <span class="sauce-chip">Moutarde</span><span class="sauce-chip">Algérienne</span>
+    </div>
+    <div class="commande-cta">
+      <a href="tel:0476358886" class="btn btn-dark">📞 Appeler</a>
+      <span class="commande-cta__ou">ou</span>
+      <button class="btn btn-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Ajouter au panier</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TACOS ══ -->
+<section class="menu-section" id="tacos">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__text">
+        <div class="menu-cat__head" style="border:none;margin-bottom:.2rem">
+          <span class="menu-cat__icon">🌯</span>
+          <div><div class="menu-cat__titre">Tacos</div><div class="menu-cat__sub">Simple ou Maxi · Seul ou en menu (+ frites + boisson)</div></div>
+        </div>
+      </div>
+      <img src="photos/food bosphore 5.webp" alt="Tacos maison" class="section-head__img"
+           onerror="this.style.display='none'">
+    </div>
+    <div class="menu-photo-strip">
+      <img src="photos/food bosphore 5.webp" alt="Tacos" class="menu-photo-strip__img" onerror="this.style.display='none'">
+      <img src="photos/food bosphore 1.webp" alt="Galette tacos" class="menu-photo-strip__img" onerror="this.style.display='none'">
+    </div>
+    <p style="font-size:.74rem;font-weight:800;color:var(--texte-2);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.8px;">— Tacos Simple —</p>
+    <div class="tacos-grid" style="margin-bottom:.9rem">
+      <div class="tacos-item"><div class="tacos-item__nom">Tacos Kebab</div><div class="tacos-item__desc">Veau 100&nbsp;%, sauce fromagère, garniture fraîche</div><div class="tacos-item__prix" style="display:none">9,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="9" data-label="seul">Seul<span class="sel-opt__prix">9,00 €</span></button><button class="sel-opt" data-prix="12.5" data-label="menu">Menu<span class="sel-opt__prix">12,50 €</span></button></div></div>
+      <div class="tacos-item"><div class="tacos-item__nom">Tacos Merguez</div><div class="tacos-item__desc">Merguez grillée, harissa douce, sauce fromagère</div><div class="tacos-item__prix" style="display:none">9,50 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="9.5" data-label="seul">Seul<span class="sel-opt__prix">9,50 €</span></button><button class="sel-opt" data-prix="13" data-label="menu">Menu<span class="sel-opt__prix">13,00 €</span></button></div></div>
+      <div class="tacos-item"><div class="tacos-item__nom">Tacos Poulet / Steak</div><div class="tacos-item__desc">Escalope, nuggets, cordon bleu, steak, sucuk ou feta</div><div class="tacos-item__prix" style="display:none">8,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="8" data-label="seul">Seul<span class="sel-opt__prix">8,00 €</span></button><button class="sel-opt" data-prix="11.5" data-label="menu">Menu<span class="sel-opt__prix">11,50 €</span></button></div></div>
+    </div>
+    <p style="font-size:.74rem;font-weight:800;color:var(--texte-2);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.8px;">— Maxi Tacos —</p>
+    <div class="tacos-grid">
+      <div class="tacos-item"><div class="tacos-item__nom">Maxi Kebab</div><div class="tacos-item__desc">Grande portion veau + cordon bleu</div><div class="tacos-item__prix" style="display:none">14,00 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="14" data-label="seul">Seul<span class="sel-opt__prix">14,00 €</span></button><button class="sel-opt" data-prix="17" data-label="menu">Menu<span class="sel-opt__prix">17,00 €</span></button></div></div>
+      <div class="tacos-item"><div class="tacos-item__nom">Maxi Merguez</div><div class="tacos-item__desc">Grande portion merguez, harissa maison</div><div class="tacos-item__prix" style="display:none">14,50 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="14.5" data-label="seul">Seul<span class="sel-opt__prix">14,50 €</span></button><button class="sel-opt" data-prix="17.5" data-label="menu">Menu<span class="sel-opt__prix">17,50 €</span></button></div></div>
+      <div class="tacos-item"><div class="tacos-item__nom">Maxi Mixte</div><div class="tacos-item__desc">Kebab + escalope / steak / nuggets / cordon bleu</div><div class="tacos-item__prix" style="display:none">12,50 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="12.5" data-label="seul">Seul<span class="sel-opt__prix">12,50 €</span></button><button class="sel-opt" data-prix="16" data-label="menu">Menu<span class="sel-opt__prix">16,00 €</span></button></div></div>
+      <div class="tacos-item"><div class="tacos-item__nom">Maxi Suçuk</div><div class="tacos-item__desc">Saucisse turque + nuggets ou feta</div><div class="tacos-item__prix" style="display:none">11,50 €</div><div class="sel-toggle"><button class="sel-opt active" data-prix="11.5" data-label="seul">Seul<span class="sel-opt__prix">11,50 €</span></button><button class="sel-opt" data-prix="15" data-label="menu">Menu<span class="sel-opt__prix">15,00 €</span></button></div></div>
+    </div>
+    <div class="commande-cta">
+      <a href="tel:0476358886" class="btn btn-dark">📞 Appeler</a>
+      <span class="commande-cta__ou">ou</span>
+      <button class="btn btn-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Ajouter au panier</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SUR COMMANDE ══ -->
+<section class="commande-section" id="commande">
+  <div class="container">
+    <h2 class="section-titre">✨ Spécialités sur commande</h2>
+    <p class="section-sous">Plats de tradition préparés la veille · Appelez-nous pour réserver</p>
+    <!-- Photos des plats sur commande -->
+    <div class="commande-photo-strip">
+      <img src="photos/food bosphore 3.webp" alt="Aubergine farcie maison" class="commande-photo-strip__img"
+           onerror="this.style.display='none'">
+      <img src="photos/food bosphore 8.webp" alt="Grand plateau mezzé" class="commande-photo-strip__img"
+           onerror="this.style.display='none'">
+      <img src="photos/food bosphore 13.webp" alt="Mezzé oriental varié" class="commande-photo-strip__img"
+           onerror="this.style.display='none'">
+    </div>
+    <div class="commande-grid">
+      <div class="commande-card"><span class="commande-card__icon">🍃</span><div class="commande-card__nom">Feuilles de vigne</div><div class="commande-card__desc">Farcies viande et riz, recette familiale</div></div>
+      <div class="commande-card"><span class="commande-card__icon">🍆</span><div class="commande-card__nom">Aubergines farcies</div><div class="commande-card__desc">Karnıyarık turc, viande hachée, herbes</div></div>
+      <div class="commande-card"><span class="commande-card__icon">🫑</span><div class="commande-card__nom">Poivrons farcis</div><div class="commande-card__desc">Riz, viande, épices, sauce tomate maison</div></div>
+      <div class="commande-card"><span class="commande-card__icon">🥒</span><div class="commande-card__nom">Courgettes farcies</div><div class="commande-card__desc">Dolma, bœuf haché parfumé</div></div>
+      <div class="commande-card"><span class="commande-card__icon">🫙</span><div class="commande-card__nom">Boulettes farcies</div><div class="commande-card__desc">İç köfte, boulgour et agneau</div></div>
+      <div class="commande-card"><span class="commande-card__icon">👥</span><div class="commande-card__nom">Plateau événement</div><div class="commande-card__desc">Groupes &amp; occasions spéciales — nous contacter</div></div>
+    </div>
+    <div style="text-align:center;margin-top:1.4rem;">
+      <a href="tel:0476358886" class="btn btn-or">📞 Appeler pour réserver</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DESSERTS + BOISSONS ══ -->
+<section class="menu-section">
+  <div class="container">
+    <div class="deux-col">
+      <!-- DESSERTS (SUCRÉ) -->
+      <div>
+        <div class="menu-cat__head" id="desserts">
+          <span class="menu-cat__icon">🍮</span>
+          <div><div class="menu-cat__titre">Desserts Maison</div><div class="menu-cat__sub">Pâtisseries orientales faites maison</div></div>
+        </div>
+        <!-- Photos sucrées uniquement -->
+        <div class="desserts-photos">
+          <img src="photos/food bosphore 7.webp" alt="Baklava maison" class="desserts-photos__img"
+               onerror="this.style.display='none'">
+          <img src="photos/food bosphore 16.webp" alt="Halva glacé" class="desserts-photos__img"
+               onerror="this.style.display='none'">
+          <img src="photos/food bosphore 10.webp" alt="Makrout sésame" class="desserts-photos__img"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Tiramisù maison</div></div><div class="menu-item__prix">3,50 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Halva maison</div></div><div class="menu-item__prix">3,50 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Baklava</div></div><div class="menu-item__prix">2,70 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Corne de Gazelle</div></div><div class="menu-item__prix">2,70 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Makrout</div></div><div class="menu-item__prix">2,70 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Pâtisserie du jour</div></div><div class="menu-item__prix">2,70 €</div></div>
+        </div>
+      </div>
+      <!-- BOISSONS -->
+      <div>
+        <div class="menu-cat__head" id="boissons">
+          <span class="menu-cat__icon">🥤</span>
+          <div><div class="menu-cat__titre">Boissons</div></div>
+        </div>
+        <div class="menu-items">
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Limonade maison</div></div><div class="menu-item__prix">3,50 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Sodas 33 cl</div><div class="menu-item__ingr">Coca, Fanta, Sprite, Oasis…</div></div><div class="menu-item__prix">2,00 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Energy drink</div></div><div class="menu-item__prix">3,00 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Bière 25 cl</div></div><div class="menu-item__prix">2,50 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Vin au verre 25 cl</div></div><div class="menu-item__prix">4,00 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Bouteille vin 75 cl</div></div><div class="menu-item__prix">13,00 €</div></div>
+          <div class="menu-item"><div class="menu-item__info"><div class="menu-item__nom">Thé / Café</div></div><div class="menu-item__prix">1,40 €</div></div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:.74rem;color:var(--texte-2);margin-top:1rem">
+      Menu enfant disponible · Steak ou nuggets · 6,50 – 7,50 €
+    </p>
+    <div class="commande-cta">
+      <a href="tel:0476358886" class="btn btn-dark">📞 Appeler</a>
+      <span class="commande-cta__ou">ou</span>
+      <button class="btn btn-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Commander par WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INFOS PRATIQUES ══ -->
+<section style="background:var(--gris);padding:2.5rem 0">
+  <div class="container">
+    <h2 class="section-titre">Infos pratiques</h2>
+    <p class="section-sous">92 Boulevard Michel Perret · Tullins-Fures</p>
+    <div class="infos-grid">
+      <div class="info-card">
+        <div class="info-card__icon">📍</div>
+        <div><div class="info-card__label">Adresse</div><div class="info-card__val">92 Bd Michel Perret</div><div class="info-card__sub">38210 Tullins-Fures, Isère</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card__icon">📞</div>
+        <div><div class="info-card__label">Téléphone</div><div class="info-card__val"><a href="tel:0476358886" style="color:inherit;text-decoration:none">04 76 35 88 86</a></div><div class="info-card__sub">Commandes &amp; sur commande</div></div>
+      </div>
+      <div class="info-card info-card--full">
+        <div class="info-card__icon">🕐</div>
+        <div><div class="info-card__label">Horaires</div><div class="info-card__val">Mardi – Samedi : 11h – 14h · 18h – 22h</div><div class="info-card__sub">Dimanche : 18h – 22h &nbsp;·&nbsp; Lundi : Fermé</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card__icon">🌿</div>
+        <div><div class="info-card__label">Cadre</div><div class="info-card__val">Terrasse &amp; Jardin</div><div class="info-card__sub">Cheminée en hiver · Salle climatisée</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card__icon">♿</div>
+        <div><div class="info-card__label">Accessibilité</div><div class="info-card__val">Accès PMR</div><div class="info-card__sub">Parking · Entrée de plain-pied</div></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:1.25rem;display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap">
+      <a href="https://maps.google.com/?q=92+Boulevard+Michel+Perret+38210+Tullins" target="_blank" rel="noopener" class="btn btn-dark">🗺️ Itinéraire</a>
+      <button class="btn btn-wa" onclick="document.getElementById('cart-overlay').classList.add('open')">🛒 Commander par WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <strong>Bosphore</strong> — Kebab &amp; Tacos depuis 14 ans<br>
+  92 Boulevard Michel Perret · 38210 Tullins-Fures<br>
+  <a href="tel:0476358886">04 76 35 88 86</a> ·
+  <a href="mailto:contact@kebab-tullins.fr">contact@kebab-tullins.fr</a> ·
+  <a href="https://maps.google.com/?q=92+Boulevard+Michel+Perret+38210+Tullins" target="_blank" rel="noopener">Google Maps</a><br><br>
+  <span style="font-size:.68rem;opacity:.45">Site réalisé par <a href="mailto:fabiensaintsupery@gmail.com">Fabien</a> · Pack Resto Digital</span>
+</footer>
+
+<!-- ══ FAB PANIER ══ -->
+<button class="cart-fab" id="cart-fab" aria-label="Ouvrir mon panier">
+  🛒<span class="cart-fab__badge" id="cart-badge">0</span>
+</button>
+
+<!-- ══ POPUP HORAIRES ══ -->
+<div class="horaires-popup" id="horaires-popup" role="status" aria-live="polite">
+  <button class="horaires-popup__close" id="horaires-close" aria-label="Fermer">✕</button>
+  <div class="horaires-popup__jour" id="hp-jour"></div>
+  <div class="horaires-popup__statut" id="hp-statut"></div>
+  <div class="horaires-popup__horaire" id="hp-horaire"></div>
+  <div class="horaires-popup__barre" id="hp-barre"></div>
+</div>
+
+<!-- ══ ASTUCE POPUP ══ -->
+<div class="astuce-popup" id="astuce-popup" role="tooltip">
+  <button class="astuce-popup__close" id="astuce-close" aria-label="Fermer">✕</button>
+  <div class="astuce-popup__titre">💡 Comment commander ?</div>
+  <div class="astuce-popup__step">① Ajoutez vos plats au panier 🛒</div>
+  <div class="astuce-popup__step">② Choisissez à emporter ou sur place</div>
+  <div class="astuce-popup__step">③ Envoyez sur WhatsApp — réponse en 2&nbsp;min !</div>
+</div>
+
+<!-- ══ MODAL PANIER ══ -->
+<div class="cart-overlay" id="cart-overlay" role="dialog" aria-modal="true" aria-label="Panier">
+  <div class="cart-modal">
+    <div class="cart-modal__head">
+      <div class="cart-modal__titre">🛒 Ma commande</div>
+      <button class="cart-modal__close" id="cart-close" aria-label="Fermer">✕</button>
+    </div>
+    <div class="cart-modal__body" id="cart-body">
+      <div class="cart-empty">Votre panier est vide<br>Ajoutez vos plats depuis la carte !</div>
+    </div>
+    <div class="cart-modal__foot" id="cart-foot" style="display:none">
+      <div class="cart-total">
+        <span class="cart-total__label">Total estimé</span>
+        <span class="cart-total__val" id="cart-total-val">0,00 €</span>
+      </div>
+      <div class="cart-mode">
+        <button class="cart-mode-btn active" data-mode="emporter">🥡 À emporter</button>
+        <button class="cart-mode-btn" data-mode="surplace">🪑 Sur place</button>
+      </div>
+      <input type="text" class="cart-note" id="cart-note" placeholder="Numéro de table ou heure de retrait…">
+      <label class="cart-instructions-label" for="cart-instructions">✏️ Instructions spéciales</label>
+      <textarea class="cart-instructions" id="cart-instructions"
+        placeholder="Sans oignon, extra sauce, allergie noix, supplément fromage…" rows="2"></textarea>
+      <button class="cart-send-btn" id="cart-send" disabled>
+        <span>💬</span> Envoyer ma commande sur WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCRIPTS ══ -->
+<script type="module">
+import { inView, animate } from 'https://cdn.jsdelivr.net/npm/motion@11/+esm';
+inView('.menu-item, .tacos-item, .commande-card, .info-card, .photo-item, .commande-photo-strip__img, .menu-photo-strip__img', el => {
+  animate(el, { opacity:[0,1], y:[14,0] }, { duration:.42, easing:[.22,1,.36,1] });
+}, { amount:.1 });
+</script>
+
+<script>
+(function(){
+  const PHONE     = '33476358886';
+  const ASTUCE_KEY = 'bosphore_astuce_v2';
+  let cart = [], mode = 'emporter';
+
+  /* ── Vidéo hero : ralentie à 0.5x, fallback si absent ── */
+  const vid = document.getElementById('hero-video');
+  vid.addEventListener('canplay', () => { vid.playbackRate = 0.5; }, { once: true });
+  vid.addEventListener('error', () => {
+    vid.style.display = 'none';
+    document.getElementById('hero-fallback').style.display = 'block';
+  }, true);
+
+  /* ── Sticky bar : apparaît dès 25% du hero scrollé ── */
+  const stickyBar = document.getElementById('sticky-bar');
+  const menuNav   = document.getElementById('menu');
+  function updateSticky() {
+    const triggerAt = window.innerHeight * 0.25;
+    const show = window.scrollY > triggerAt;
+    stickyBar.classList.toggle('visible', show);
+    menuNav.style.top = show ? (stickyBar.offsetHeight + 'px') : '0px';
+  }
+  window.addEventListener('scroll', updateSticky, { passive: true });
+  updateSticky();
+
+  /* ── Astuce popup ── */
+  if (!localStorage.getItem(ASTUCE_KEY)) {
+    setTimeout(() => document.getElementById('astuce-popup').classList.add('show'), 4500);
+  }
+  document.getElementById('astuce-close').addEventListener('click', () => {
+    document.getElementById('astuce-popup').classList.remove('show');
+    localStorage.setItem(ASTUCE_KEY, '1');
+  });
+
+  document.addEventListener('click', function(e){
+    var opt = e.target.closest && e.target.closest('.sel-opt');
+    if (!opt) return;
+    var viandes = opt.closest('.assiette-viandes');
+    if (viandes) {
+      handleMixteViande(opt, viandes);
+      computeMixtePrice();
+      return;
+    }
+    var toggle = opt.closest('.sel-toggle');
+    if (!toggle) return;
+    toggle.querySelectorAll('.sel-opt').forEach(function(o){ o.classList.remove('active'); });
+    opt.classList.add('active');
+  });
+
+  function handleMixteViande(btn, container) {
+    var v1 = container.querySelector('.sel-v1');
+    var v2 = container.querySelector('.sel-v2');
+    if (btn.classList.contains('sel-v1')) {
+      btn.classList.remove('sel-v1');
+      if (v2) { v2.classList.remove('sel-v2'); v2.classList.add('sel-v1'); }
+    } else if (btn.classList.contains('sel-v2')) {
+      btn.classList.remove('sel-v2');
+    } else if (!v1) {
+      btn.classList.add('sel-v1');
+    } else if (!v2) {
+      btn.classList.add('sel-v2');
+    } else {
+      v1.classList.remove('sel-v1');
+      v2.classList.remove('sel-v2');
+      v2.classList.add('sel-v1');
+      btn.classList.add('sel-v2');
+    }
+  }
+
+  function computeMixtePrice() {
+    var item = document.querySelector('.assiette-mixte-item');
+    if (!item) return;
+    var v1 = item.querySelector('.assiette-viandes .sel-v1');
+    var v2 = item.querySelector('.assiette-viandes .sel-v2');
+    var addBtn = item.querySelector('.assiette-mixte-add');
+    var lbl = document.getElementById('mixte-formula-lbl');
+    if (!v1) {
+      if (lbl) lbl.textContent = 'Choisissez 2 viandes';
+      if (addBtn) addBtn.disabled = true; return;
+    }
+    if (!v2) {
+      if (lbl) lbl.textContent = v1.dataset.viande + ' · choisissez une 2ème viande';
+      if (addBtn) addBtn.disabled = true; return;
+    }
+    var t1 = v1.dataset.type, t2 = v2.dataset.type;
+    var formule, prix;
+    if (t1 === 'A' && t2 === 'A') { formule = 'A+A'; prix = 18; }
+    else if ((t1 === 'A' && t2 === 'B') || (t1 === 'B' && t2 === 'A')) { formule = 'A+B'; prix = 16.5; }
+    else { formule = 'B+B'; prix = 16; }
+    if (lbl) lbl.textContent = v1.dataset.viande + ' + ' + v2.dataset.viande + ' · ' + formule + ' — ' + prix.toFixed(2).replace('.', ',') + ' €';
+    if (addBtn) addBtn.disabled = false;
+    item.dataset.mixtePrix = prix;
+    item.dataset.mixteFormule = formule;
+  }
+  computeMixtePrice();
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest || !e.target.closest('.assiette-mixte-add')) return;
+    var item = document.querySelector('.assiette-mixte-item');
+    var v1 = item.querySelector('.assiette-viandes .sel-v1');
+    var v2 = item.querySelector('.assiette-viandes .sel-v2');
+    var prix = parseFloat(item.dataset.mixtePrix) || 16.5;
+    var formule = item.dataset.mixteFormule || 'A+B';
+    var nom = 'Assiette Mixte (' + (v1 ? v1.dataset.viande : '?') + ' + ' + (v2 ? v2.dataset.viande : '?') + ' · ' + formule + ')';
+    addItem(nom, prix);
+    var btn = e.target.closest('.assiette-mixte-add');
+    btn.textContent = '✓'; btn.style.background = 'var(--or)'; btn.style.borderColor = 'var(--or)';
+    setTimeout(function() { btn.textContent = '+'; btn.style.background = ''; btn.style.borderColor = ''; }, 700);
+  });
+
+  /* ── Injection bouton + sur chaque plat ── */
+  document.querySelectorAll('.menu-item, .tacos-item').forEach(item => {
+    if (item.dataset.customAdd) return;
+    const nomEl  = item.querySelector('.menu-item__nom, .tacos-item__nom');
+    const prixEl = item.querySelector('.menu-item__prix, .tacos-item__prix');
+    if (!nomEl || !prixEl) return;
+    const nom  = nomEl.childNodes[0].textContent.trim();
+    const prix = parseFloat(prixEl.childNodes[0].textContent.replace(',','.').replace(/[^\d.]/g,''));
+    if (!nom || isNaN(prix) || prix < 1) return;
+    const btn = document.createElement('button');
+    btn.className = 'add-to-cart-btn'; btn.textContent = '+';
+    btn.setAttribute('aria-label', 'Ajouter ' + nom);
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const toggle = item.querySelector('.sel-toggle');
+      if (toggle) {
+        const active = toggle.querySelector('.sel-opt.active');
+        const p = active ? parseFloat(active.dataset.prix) : prix;
+        const lbl = active ? active.dataset.label : '';
+        addItem(nom + (lbl ? ' (' + lbl + ')' : ''), p);
+      } else {
+        addItem(nom, prix);
+      }
+      btn.textContent = '✓'; btn.style.background = 'var(--or)'; btn.style.borderColor = 'var(--or)';
+      setTimeout(() => { btn.textContent = '+'; btn.style.background = ''; btn.style.borderColor = ''; }, 700);
+    });
+    item.appendChild(btn);
+  });
+
+  /* ── Cart state ── */
+  function addItem(nom, prix) {
+    const f = cart.find(i => i.nom === nom);
+    if (f) f.qty++; else cart.push({nom, prix, qty:1});
+    render();
+  }
+  function changeQty(nom, delta) {
+    const f = cart.find(i => i.nom === nom);
+    if (!f) return; f.qty += delta;
+    if (f.qty <= 0) cart = cart.filter(i => i.nom !== nom);
+    render();
+  }
+  function render() {
+    const total = cart.reduce((s,i) => s + i.prix*i.qty, 0);
+    const count = cart.reduce((s,i) => s + i.qty, 0);
+    const badge = document.getElementById('cart-badge');
+    badge.textContent = count; badge.classList.toggle('visible', count > 0);
+    const body = document.getElementById('cart-body');
+    if (!cart.length) {
+      body.innerHTML = '<div class="cart-empty">Votre panier est vide<br>Ajoutez vos plats depuis la carte !</div>';
+    } else {
+      body.innerHTML = cart.map(i => {
+        const k = encodeURIComponent(i.nom);
+        return `<div class="cart-line">
+          <div class="cart-line__nom">${i.nom}</div>
+          <div class="cart-line__ctrl">
+            <button class="cart-ctrl-btn" data-nom="${k}" data-delta="-1">−</button>
+            <div class="cart-line__qty">${i.qty}</div>
+            <button class="cart-ctrl-btn" data-nom="${k}" data-delta="1">+</button>
+          </div>
+          <div class="cart-line__prix">${(i.prix*i.qty).toFixed(2).replace('.',',')} €</div>
+        </div>`;
+      }).join('');
+      body.querySelectorAll('.cart-ctrl-btn').forEach(b =>
+        b.addEventListener('click', () => changeQty(decodeURIComponent(b.dataset.nom), parseInt(b.dataset.delta))));
+    }
+    document.getElementById('cart-foot').style.display = cart.length ? '' : 'none';
+    document.getElementById('cart-total-val').textContent = total.toFixed(2).replace('.',',') + ' €';
+    document.getElementById('cart-send').disabled = !cart.length;
+  }
+
+  /* ── Mode emporter / sur place ── */
+  document.querySelectorAll('.cart-mode-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      mode = b.dataset.mode;
+      document.querySelectorAll('.cart-mode-btn').forEach(x => x.classList.toggle('active', x===b));
+      const n = document.getElementById('cart-note');
+      n.classList.toggle('show', mode === 'surplace');
+      if (mode === 'surplace') n.focus();
+    });
+  });
+
+  /* ── Envoi WhatsApp ── */
+  document.getElementById('cart-send').addEventListener('click', () => {
+    if (!cart.length) return;
+    const total = cart.reduce((s,i) => s + i.prix*i.qty, 0);
+    const note         = document.getElementById('cart-note').value.trim();
+    const instructions = document.getElementById('cart-instructions').value.trim();
+    let msg = 'Bonjour Bosphore ! 👋\n\nVoici ma commande :\n\n';
+    cart.forEach(i => { msg += `• ${i.qty}× ${i.nom}\n`; });
+    msg += `\n💶 *Total estimé : ${total.toFixed(2).replace('.',',')} €*`;
+    msg += `\n📦 Mode : ${mode === 'surplace' ? 'Sur place' : 'À emporter'}`;
+    if (note) msg += ` — ${note}`;
+    if (instructions) msg += `\n\n📝 *Instructions :* ${instructions}`;
+    msg += '\n\nMerci ! 🌯';
+    window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg),'_blank');
+  });
+
+  /* ── Ouverture / fermeture modal ── */
+  const openCart = () => {
+    document.getElementById('astuce-popup').classList.remove('show');
+    localStorage.setItem(ASTUCE_KEY,'1');
+    document.getElementById('cart-overlay').classList.add('open');
+  };
+  document.getElementById('cart-fab').addEventListener('click', openCart);
+  const close = () => document.getElementById('cart-overlay').classList.remove('open');
+  document.getElementById('cart-close').addEventListener('click', close);
+  document.getElementById('cart-overlay').addEventListener('click', e => { if(e.target===e.currentTarget) close(); });
+  document.addEventListener('keydown', e => { if(e.key==='Escape') close(); });
+
+  /* ── Popup horaires (30 s, top-left) ── */
+  (function(){
+    var JOURS = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+    var n = new Date();
+    var j = n.getDay();
+    var hm = n.getHours() * 60 + n.getMinutes();
+    var statut, horaire, ouvert;
+    if (j === 1) {
+      ouvert = false; statut = 'Fermé aujourd\'hui'; horaire = 'Réouverture mardi 11h00';
+    } else if (j === 0) {
+      ouvert = hm >= 18*60 && hm < 22*60;
+      if (hm < 18*60)       statut = 'Ouvre à 18h00';
+      else if (hm >= 22*60) statut = 'Fermé ce soir';
+      else                   statut = 'Ouvert maintenant';
+      horaire = 'Dimanche : 18h00 – 22h00';
+    } else {
+      ouvert = (hm >= 11*60 && hm < 14*60) || (hm >= 18*60 && hm < 22*60);
+      if      (hm < 11*60)  statut = 'Ouvre à 11h00';
+      else if (hm < 14*60)  statut = 'Ouvert maintenant';
+      else if (hm < 18*60)  statut = 'Ouvre à 18h00';
+      else if (hm < 22*60)  statut = 'Ouvert maintenant';
+      else                   statut = 'Fermé ce soir';
+      horaire = 'Mar–Sam : 11h–14h · 18h–22h';
+    }
+    document.getElementById('hp-jour').textContent = JOURS[j];
+    var sEl = document.getElementById('hp-statut');
+    sEl.textContent = statut;
+    sEl.className = 'horaires-popup__statut horaires-popup__statut--' + (ouvert ? 'ouvert' : 'ferme');
+    document.getElementById('hp-horaire').textContent = horaire;
+    var popup = document.getElementById('horaires-popup');
+    var autoT = setTimeout(function(){ popup.classList.add('hide'); setTimeout(function(){ popup.style.display='none'; }, 450); }, 30000);
+    setTimeout(function(){ popup.classList.add('show'); }, 600);
+    document.getElementById('horaires-close').addEventListener('click', function(){
+      clearTimeout(autoT);
+      popup.classList.add('hide');
+      setTimeout(function(){ popup.style.display='none'; }, 450);
+    });
+  })();
+
+  render();
+})();
+</script>
+
+</body>
+</html>
