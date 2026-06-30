@@ -519,12 +519,17 @@
     ══════════════════════════════════════════ */
     @media(max-width:680px){
       html{scroll-padding-top:130px}
-      .hero-content{padding:0 1.25rem 3rem}
+      .hero-content{padding:0 1.25rem 3rem;text-align:center}
       .hero-main{flex-direction:column;gap:.8rem}
-      .hero-brand-block{order:1;align-items:flex-start}
+      .hero-badge{display:inline-block}
+      .hero-brand-block{order:1;align-items:center}
       .hero-text-block{order:2}
-      .hero-logo{height:110px}
-      .hero-sub{white-space:normal;font-size:.88rem}
+      .hero-logo{height:120px}
+      .hero-sub{white-space:normal;font-size:.88rem;text-align:center}
+      .hero-rating{display:flex;justify-content:center}
+      .hero-actions{gap:.5rem;justify-content:center}
+      .hero-actions .btn{font-size:.8rem;padding:.55rem 1rem}
+      .hero-actions a.btn-outline{flex-basis:100%;justify-content:center}
       .infos-grid{grid-template-columns:1fr}
       .info-card--full{grid-column:auto}
       .deux-col{grid-template-columns:1fr}
